@@ -1,22 +1,31 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.0.0'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id "java"
+    id "org.springframework.boot" version "3.0.0"
+    id "io.spring.dependency-management" version "1.1.0"
 }
 
-group = 'org.richrocksmy'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+group = "org.richrocksmy"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "17"
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ext {
+    jooqVersion = "3.17.5"
+    postgresVersion = "42.5.1"
 }
 
-tasks.named('test') {
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.jooq:jooq:$jooqVersion"
+    implementation "org.jooq:jooq-meta:$jooqVersion"
+    implementation "org.jooq:jooq-codegen:$jooqVersion"
+    implementation "org.postgresql:postgresql:$postgresVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.named("test") {
     useJUnitPlatform()
 }
