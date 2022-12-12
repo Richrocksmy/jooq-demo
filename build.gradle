@@ -15,15 +15,20 @@ repositories {
 ext {
     jooqVersion = "3.17.5"
     postgresVersion = "42.5.1"
+    junitVersion = "5.9.1"
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.jooq:jooq:$jooqVersion"
     implementation "org.jooq:jooq-meta:$jooqVersion"
     implementation "org.jooq:jooq-codegen:$jooqVersion"
     implementation "org.postgresql:postgresql:$postgresVersion"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
 }
 
 tasks.named("test") {
