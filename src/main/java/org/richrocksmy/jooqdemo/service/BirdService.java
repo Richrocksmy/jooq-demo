@@ -5,15 +5,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BirdService {
 
-  public List<Bird> getAllBirds() {
-    return Collections.emptyList();
+  public List<Bird> getBirds(final Optional<String> birdType) {
+    return birdType.map(this::getBirdsByType).orElseGet(this::getAllBirds);
   }
 
-  public List<Bird> getBirdsByType(final String birdType) {
+  private List<Bird> getAllBirds() {
+    return Collections.emptyList();
+  }
+  
+  private List<Bird> getBirdsByType(final String birdType) {
     return Collections.emptyList();
   }
 }

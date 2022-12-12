@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.richrocksmy.jooqdemo.controller.dto.Bird;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +19,7 @@ class BirdServiceTest {
     BirdService birdService = new BirdService();
 
     // When
-    List<Bird> birds = birdService.getAllBirds();
+    List<Bird> birds = birdService.getBirds(Optional.empty());
 
     // Then
     assertThat(birds).hasSize(0);
@@ -30,7 +31,7 @@ class BirdServiceTest {
     BirdService birdService = new BirdService();
 
     // When
-    List<Bird> birds = birdService.getBirdsByType("peacock");
+    List<Bird> birds = birdService.getBirds(Optional.of("peacock"));
 
     // Then
     assertThat(birds).hasSize(0);
