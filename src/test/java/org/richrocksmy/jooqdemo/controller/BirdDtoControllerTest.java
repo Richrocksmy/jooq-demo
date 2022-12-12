@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BirdController.class)
-public class BirdControllerTest {
+public class BirdDtoControllerTest {
 
   @Autowired
   private MockMvc mockMvc;

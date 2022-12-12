@@ -1,24 +1,33 @@
 package org.richrocksmy.jooqdemo.service;
 
-import org.richrocksmy.jooqdemo.controller.dto.Bird;
+import org.richrocksmy.jooqdemo.controller.dto.BirdDto;
+import org.richrocksmy.jooqdemo.repository.BirdRepository;
+import org.richrocksmy.jooqdemo.repository.model.Bird;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BirdService {
 
-  public List<Bird> getBirds(final Optional<String> birdType) {
-    return birdType.map(this::getBirdsByType).orElseGet(this::getAllBirds);
+  private final BirdRepository birdRepository;
+
+  public BirdService(final BirdRepository birdRepository) {
+    this.birdRepository = birdRepository;
+  }
+
+  public List<BirdDto> getBirds(final Optional<String> birdType) {
+    return birdType.map(this::getBirdsByType).orElseGet(this::getAllBirds).stream()
+        .map(BirdDto::fromModel)
+        .toList();
   }
 
   private List<Bird> getAllBirds() {
-    return Collections.emptyList();
+    return birdRepository.findAllBirds();
   }
   
   private List<Bird> getBirdsByType(final String birdType) {
-    return Collections.emptyList();
+    return birdRepository.findAllBirdsByType(birdType);
   }
 }
