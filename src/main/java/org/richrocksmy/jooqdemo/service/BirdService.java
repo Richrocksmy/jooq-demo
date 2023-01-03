@@ -1,5 +1,6 @@
 package org.richrocksmy.jooqdemo.service;
 
+import org.jooq.DSLContext;
 import org.richrocksmy.jooqdemo.controller.dto.BirdDto;
 import org.richrocksmy.jooqdemo.repository.BirdRepository;
 import org.richrocksmy.jooqdemo.repository.model.Bird;
@@ -13,8 +14,7 @@ public class BirdService {
 
   private final BirdRepository birdRepository;
 
-  public BirdService(final BirdRepository birdRepository) {
-    this.birdRepository = birdRepository;
+  public BirdService(final BirdRepository birdRepository) { this.birdRepository = birdRepository;}
   }
 
   public List<BirdDto> getBirds(final Optional<String> birdType) {

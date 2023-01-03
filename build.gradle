@@ -2,6 +2,8 @@ plugins {
     id "java"
     id "org.springframework.boot" version "3.0.0"
     id "io.spring.dependency-management" version "1.1.0"
+    id "org.flywaydb.flyway" version "9.8.1"
+    id "nu.studer.jooq" version "8.1"
 }
 
 group = "org.richrocksmy"
@@ -16,12 +18,17 @@ ext {
     jooqVersion = "3.17.5"
     postgresVersion = "42.5.1"
     junitVersion = "5.9.1"
+    h2Version = "h2:2.1.214"
+    flywayVersion = "9.10.2"
 }
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-jooq"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "com.h2database:$h2Version"
+    implementation "org.flywaydb:flyway-core:$flywayVersion"
+    jooqGenerator 'org.postgresql:postgresql:42.5.1'
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
@@ -31,4 +38,52 @@ dependencies {
 
 tasks.named("test") {
     useJUnitPlatform()
+}
+
+jooq {
+    version = '3.17.6'  // default (can be omitted)
+
+    configurations {
+        main {
+            generationTool {
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:h2:~/jooq'
+                    user = 'sa'
+                    password = ''
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        excludes = 'flyway_schema_history'
+                        inputSchema = 'public'
+                        forcedTypes {
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'JSONB?'
+                            }
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'INET'
+                            }
+                        }
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'nu.studer.sample'
+                        directory = 'build/generated-src/jooq/main'  // default (can be omitted)
+                    }
+                    strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                }
+            }
+        }
+    }
 }

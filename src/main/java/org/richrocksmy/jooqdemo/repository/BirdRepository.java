@@ -1,14 +1,22 @@
 package org.richrocksmy.jooqdemo.repository;
 
+import org.jooq.DSLContext;
 import org.richrocksmy.jooqdemo.repository.model.Bird;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface BirdRepository extends CrudRepository<Bird, UUID> {
+public class BirdRepository {
 
-  List<Bird> findAllBirds();
+  private final DSLContext dslContext;
 
-  List<Bird> findAllBirdsByType(final String type);
+  public BirdRepository(final DSLContext dslContext) { this.dslContext = dslContext;}
+
+  List<Bird> findAllBirds() {
+
+  }
+
+  List<Bird> findAllBirdsByType(final String type) {
+
+  }
+
 }
